@@ -1,4 +1,11 @@
 /**
+ * 函数查询网站
+ *     pubs.opengroup.org
+ *     linux.die.net
+ *     man7.org
+ */
+
+/**
  * @brief
  *     包含于<stdio.h> 
  *     从stdin流中读取字符串，直到遇到换行符或者EOF时停止，换行符不会被写入字符串。
@@ -75,3 +82,46 @@ int fcntl(int fildes, int cmd, ...);
  *     失败返回null
  */
 char *gets_s(char *buffer, rsize_t n);
+
+/**
+ * @brief
+ *     包含于<stat.h>
+ *     返回文件信息
+ *     
+ * @param path 文件路径
+ * @param buf  存储文件信息的结构体
+ * 
+ * @retval
+ *     成功返回0
+ *     失败返回-1，并设置errno
+ */
+int stat(const char *path, struct stat *buf);
+
+/**
+ * @brief
+ *     包含于<stdio.h>
+ *     返回文件信息
+ *     当 path 为符号链接时，返回符号链接本身的信息，stat()返回链接指向的文件的信息
+ *     其他情况与stat()相同.
+ *     
+ * @param path 文件路径
+ * @param buf  存储文件信息的结构体
+ * @return
+ *     成功返回0
+ *     失败返回-1，并设置errno
+ */
+int lstat(const char *path, struct stat *buf);
+
+/**
+ * @brief
+ *     包含于<stdio.h>
+ *     返回文件信息
+ *     与stat()相同，但要检索的文件由文件描述符fildes指定.
+ *     
+ * @param  fildes 文件描述符
+ * @param  buf    存储文件信息的结构体
+ * @return
+ *     成功返回0
+ *     失败返回-1，并设置errno
+ */
+int fstat(int fildes, struct stat *buf);
