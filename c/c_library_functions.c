@@ -166,3 +166,37 @@ struct dirent *readdir(DIR *dirp);
  */
 int closedir(DIR *dirp);
 
+/**
+ * @brief
+ *     包含于<unidt.h> 系统调用
+ *     从文件描述符 fd 指定的文件中，读取 count 字节的数据到 buf 指向的缓冲区
+ *
+ * @param  fd    文件描述符
+ * @param  buf   缓冲区
+ * @param  count 最多读取的字节数
+ *
+ * @return ssize_t
+ *     成功返回读取的字节数，0 表示文件结束，文件操作指针将按照这个数字提前
+ *     失败返回-1，并设置errno，此时，无法确定文件操作指针（如果有）是否改变
+ */
+ssize_t read(int fd, void *buf, size_t count);
+
+/**
+ * @brief
+ *     包含于<unidt.h> 系统调用
+ *     将 buf 指向的缓冲区中 count 字节的数据写入到文件描述符 fd 指定的文件中
+ * 
+ * @param  fd    文件描述符
+ * @param  buf   缓冲区
+ * @param  count 最多写入的大小
+ *
+ * @return ssize_t
+ *     成功返回写入的字节数
+ *     失败返回-1，并设置errno
+ *     如果 count 为 0 ，且 fd 指向的是正常的文件，
+ *         如果函数发生错误，则返回错误状态
+ *         如果没有错误，则什么也不发生
+ *     如果 count 为 0 ，且 fd 指向非常规文件
+ *         则结果不能确定
+ */     
+ssize_t write(int fd, const void *buf, size_t count);
