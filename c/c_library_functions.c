@@ -200,3 +200,14 @@ ssize_t read(int fd, void *buf, size_t count);
  *         则结果不能确定
  */     
 ssize_t write(int fd, const void *buf, size_t count);
+
+/**
+ * @brief
+ *     从标准流 stdin 中读取下一个字符    
+ *
+ * @return  int
+ *      成功时，返回读取的字符数
+ *      当遇到EOF时，返回EOF并设置 stdin 的 eof 指示器 (feof)
+ *      发生其他错误时，返回 EOF 并设置错误指示器 (ferror)
+ */
+int getchar(void);
