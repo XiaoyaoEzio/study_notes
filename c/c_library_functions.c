@@ -203,6 +203,7 @@ ssize_t write(int fd, const void *buf, size_t count);
 
 /**
  * @brief
+ *     包含于<stdio.h>
  *     从标准流 stdin 中读取下一个字符    
  *
  * @return  int
@@ -214,7 +215,9 @@ int getchar(void);
 
 /**
  * @brief
+ *     包含于<string.h>
  *     从 source 指向的字符串中读取前 num 个到 dest 指定的字符串中
+ *     如果 source 的字符数小于 num，则用 '\0' 补充
  *
  * @param  dest   字符串被复制到的地方
  * @param  source 被复制的字符串
@@ -224,3 +227,68 @@ int getchar(void);
  *      返回dest
  */
 char *strncpy(char *dest, const char *source, size_t num);
+
+/**
+ * @brief
+ *     包含于<stdlib.h>
+ *     分配一块 size 大小的内存，分配的内存不会被初始化，也就说值是未知的
+ *
+ * @param  size 需要的内存块大小，单位是字节
+ *
+ * @return void *
+ *     如果成功，返回指向这块内存的指针
+ *     如果失败，返回空指针
+ *     如果 size 为 0 的话，具体表现取决于具体库的实现(可能是也可能不是空指针)，
+ *         但这个指针不应该解引用
+ */
+void *malloc(size_t size);
+
+/**
+ * @brief
+ *     包含于<stdlib.h>
+ *     分配一块包含 num 个元素的数组，并用 0 初始化，每个元素的长度为 size
+ *
+ * @param  num  要分配的元素个数
+ * @param  size 元素长度
+ *
+ * @return void *
+ *     如果成功，返回指向分配内存的地址
+ *     如果失败，返回空指针
+ *     如果 size 为 0 的话，具体表现取决于具体库的实现(可能是也可能不是空指针)，
+ *         但这个指针不应该解引用
+ */
+void *calloc(size_t num, size_t size);
+
+/**
+ * @brief
+ *     包含于<stdlib.h>
+ *     重新分配 ptr 指向的内存块大小，该方法可能将内存块移动到一个新的地方
+ *     从开始处到新旧内存块大小较小数值之间的内容是不变的
+ *     如果新内存块更大的话，旧内存块的内容会被复制到新内存块的位置，新分配部分的内容是不确定的
+ *     如果 ptr 是空指针，相当于 malloc
+ *     如果 ptr 不是空指针，且 size 为 0，则相当于 free
+ *     如果内存块被移动的话，会执行一次 free(ptr)，也就是说，旧内存块的指针会不可用
+ *
+ * @param  ptr  通过malloc、calloc分配的内存块指针，也可以是空指针，用来分配一块新的内存
+ * @param  size 新内存块的大小，单位为字节
+ *
+ * @return void *
+ *     如果成功，返回新内存块的指针
+ *     如果失败，将返回空指针，此时 ptr 指向的内存块不会被释放(指针已然可用，并且内容不会改变)
+ *
+ * @note
+ *     应该使用新的指针保存 realloc 的返回值，因为如果使用原指针的话，当 realloc 失败时，会覆盖原指针的值
+ */
+void *realloc(void *ptr, size_t size);
+
+/**
+ * @brief
+ *     包含于<stdlib.h>
+ *     释放由 malloc、calloc、realloc分配的内存
+ *     如果 ptr 不是指向由上述函数分配的内存块，会导致不可预测的行为
+ *     如果 ptr 为空指针，什么也不做
+ *
+ * @param ptr 要释放的内存块地址
+ */
+void free(void *ptr);
+
