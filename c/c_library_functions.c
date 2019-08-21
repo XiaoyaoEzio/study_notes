@@ -211,3 +211,16 @@ ssize_t write(int fd, const void *buf, size_t count);
  *      发生其他错误时，返回 EOF 并设置错误指示器 (ferror)
  */
 int getchar(void);
+
+/**
+ * @brief
+ *     从 source 指向的字符串中读取前 num 个到 dest 指定的字符串中
+ *
+ * @param  dest   字符串被复制到的地方
+ * @param  source 被复制的字符串
+ * @param  num    最多复制的字符数
+ *
+ * @return char *
+ *      返回dest
+ */
+char *strncpy(char *dest, const char *source, size_t num);
